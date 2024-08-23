@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Text Area with Character Counter</title>
+</head>
+
+<body class="flex justify-center items-center h-screen bg-gray-200">
+
+    <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+
+        <textarea id="message" maxlength="200" placeholder="Type your message here..."
+            class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent resize-none"
+            rows="6"></textarea>
+
+        <div id="counter" class="text-sm text-gray-500 mt-2 text-right">0/200 characters</div>
+        <div id="warning" class="text-red-500 text-sm mt-1 hidden"></div>
+
+    </div>
+
+    <script>
+
+        const textarea = document.getElementById('message');
+        const counter = document.getElementById('counter');
+        const warning = document.getElementById('warning');
+        const maxLength = textarea.maxLength;
+
+        function updateCounter() {
+            const currentLength = textarea.value.length;
+            const remainingLength = maxLength - currentLength;
+
+            counter.textContent = currentLength + '/' + maxLength + ' characters';
+
+            if (currentLength >= maxLength) {
+                warning.textContent = 'You have reached the maximum character limit.';
+                warning.style.display = 'block';
+                textarea.value = textarea.value.substring(0, maxLength);
+            } else {
+                warning.style.display = 'none';
+            }
+        }
+
+        textarea.addEventListener('input', updateCounter);
+
+        updateCounter();
+
+    </script>
+</body>
+
+</html>
